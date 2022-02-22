@@ -5,14 +5,15 @@ LDFLAGS = -L/usr/local/lib
 LIBRARIES = -L. -lhttpserver
 
 TARGET = main
+CONFIG = configs
 
 .PHONY: all clean
 
 
 all: $(TARGET)
 
-$(TARGET): $(TARGET).cpp
-	$(CC) $(INCLUDE) $(LDFLAGS) $(CFLAGS) $(LIBRARIES) -o server.exe $(TARGET).cpp 
+$(TARGET): $(TARGET).cpp $(CONFIG).cpp
+	$(CC) $(INCLUDE) $(LDFLAGS) $(CFLAGS) $(LIBRARIES) -o server.exe $(TARGET).cpp $(CONFIG).cpp
 	
 clean:
 	rm -f *.exe *.o

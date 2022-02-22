@@ -33,11 +33,7 @@
 
 ### My ignores ###
 # Exclude Folders
-venv
-env
-out
-Bin
-Build
+
 
 # Exclude Compiled Files
 *.a

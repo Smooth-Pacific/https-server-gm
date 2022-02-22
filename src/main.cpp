@@ -1,5 +1,7 @@
 #include <iostream>
 #include <httpserver.hpp>
+#include "headers/configs.h"
+
 
 using namespace httpserver;
 
@@ -13,16 +15,18 @@ public:
 };
 
 int main() {
-    httpserver::webserver ws = httpserver::create_webserver(8001)
+    Config c;
+
+    httpserver::webserver ws = httpserver::create_webserver(c.get_port())
         .use_ssl()
-        .https_mem_key("/ca/server-ca/private/server-ca.key")
-        .https_mem_cert("/ca/server-ca/server-ca.crt")
-        .max_connections(4)
-        .connection_timeout(100)
-        .memory_limit(30000)
+        .https_mem_key(c.get_mem_key_path())
+        .https_mem_cert(c.get_mem_cert_path())
+        .max_connections(c.get_max_connections())
+        .connection_timeout(c.get_timeout())
+        .memory_limit(c.get_memory_limit())
         .use_dual_stack() //could check fo ipv4/ipv6 here
-        .start_method(httpserver::http::http_utils::INTERNAL_SELECT)
-        .max_threads(8);
+        .start_method(httpserver::http::http_utils::INTERNAL_SELECT) //default value
+        .max_threads(c.get_max_threads());
 
     hello_world_resource hwr;
     ws.register_resource("/hello", &hwr);
