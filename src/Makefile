@@ -12,7 +12,7 @@ TARGET = main
 all: $(TARGET)
 
 $(TARGET): $(TARGET).cpp
-	$(CC) $(INCLUDE) $(LDFLAGS) $(CFLAGS) $(LIBRARIES) -o server.exe $(TARGET).cpp
+	$(CC) $(INCLUDE) $(LDFLAGS) $(CFLAGS) $(LIBRARIES) -o server.exe $(TARGET).cpp 
 	
 clean:
-	rm -f *.o
+	rm -f *.exe *.o
