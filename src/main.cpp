@@ -1,8 +1,12 @@
 #include <iostream>
 #include <httpserver.hpp>
 #include "../include/configs.h"
+//#include "../include/monitoring.h"
 #include "hello_world.cpp"
 
+void start_monitoring(Monitoring &m) {
+    m.start();
+}
 
 int main() {
     Config c;
@@ -34,6 +38,9 @@ int main() {
         ? static_cast<std::string>(getenv("DIGEST_PASS")) 
         : std::string("");
 
+    Monitoring m("log.txt");
+
+    std::thread monitor_thread(start_monitoring, std::ref(m));
     ws.start(true);
 
     return 0;
@@ -44,4 +51,4 @@ int main() {
 // curl -XGET -v http://localhost:8001/hello
 // curl -XGET -v -k https://localhost:8001/hello
 // curl -XGET -v --digest --user myuser:password https://localhost:8080/hello
-//curl -v --cacert /usr/local/share/ca-certificates/root-ca.crt --digest --user myuser:password https://localhost:8080/hello
+// curl -v --cacert /usr/local/share/ca-certificates/root-ca.crt --digest --user myuser:password https://localhost:8080/hello

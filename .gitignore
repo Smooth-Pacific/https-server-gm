@@ -33,6 +33,7 @@
 
 ### My ignores ###
 # Exclude Folders
+*.txt
 
 
 # Exclude Compiled Files
