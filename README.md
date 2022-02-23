@@ -1,6 +1,7 @@
 # HTTPS Server
 
-### TODO
+
+## TODO
 - Setup Dockerfile
 - Initial Server connection
 - Client side connection

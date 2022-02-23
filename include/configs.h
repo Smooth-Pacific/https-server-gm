@@ -16,6 +16,7 @@ private:
 public:
     Config();
     void load();
+    std::string toString();
 
     int     get_port();
     int     get_max_connections();

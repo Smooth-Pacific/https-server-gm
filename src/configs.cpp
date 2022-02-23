@@ -1,8 +1,10 @@
-#include "headers/configs.h"
+#include "../include/configs.h"
+#include <string>
 
 Config::Config() {
     load();
 }
+
 
 // Loads settings from environment variables or sets to defaults
 void Config::load() {
@@ -46,6 +48,15 @@ void Config::load() {
     mem_cert_path = getenv("HTTPS_MEM_CERT_PATH") 
         ? static_cast<std::string>(getenv("HTTPS_MEM_CERT_PATH")) 
         : "/ca/server-ca/server-ca.crt";
+}
+
+
+// Print config settings
+std::string Config::toString() {
+    return "Port Number: " + std::to_string(port) + "\n"
+        + "Timeout: " + std::to_string(timeout) + "\n"
+        + "Maximum Connections: " + std::to_string(max_connections) + "\n"
+        + "Max Threads: " + std::to_string(max_threads) + "\n";
 }
 
 
