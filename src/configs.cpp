@@ -10,7 +10,7 @@ Config::Config() {
 void Config::load() {
     // Load from the environment variables
     port = getenv("PORT") 
-        ? static_cast<int>(std::stoi(getenv("PORT"))) 
+        ? static_cast<int>(std::stoul(getenv("PORT"))) 
         : 8080;
 
     max_connections = getenv("MAX_CONNECTIONS") 
@@ -61,11 +61,19 @@ std::string Config::toString() {
 
 
 // Getters
-int Config::get_port() { return port; }
+unsigned int Config::get_port() { return port; }
 int Config::get_max_connections() { return max_connections; }
 int Config::get_timeout() { return timeout; }
 int Config::get_memory_limit() { return memory_limit; }
-int  Config::get_max_threads() { return max_threads; }
+int  Config::get_max_threads() {
+    if (max_threads > 4) {
+        return max_threads;
+    }
+    
+    else {
+        return 1; 
+    }
+}
 // bool Config::get_iPv4() { return iPv4; }
 // bool Config::get_iPv6() { return iPv6; }
 std::string Config::get_mem_key_path() { return mem_key_path; }

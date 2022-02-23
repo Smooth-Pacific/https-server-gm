@@ -30,14 +30,6 @@ int main() {
     std::cout << c.toString() << std::endl;
     std::cout << "Ongoing Status: " << std::endl;
 
-    std::string user = getenv("DIGEST_USER") 
-        ? static_cast<std::string>(getenv("DIGEST_USER")) 
-        : std::string("");
-
-    std::string pass = getenv("DIGEST_PASS") 
-        ? static_cast<std::string>(getenv("DIGEST_PASS")) 
-        : std::string("");
-
     Monitoring m("log.txt");
 
     std::thread monitor_thread(start_monitoring, std::ref(m));

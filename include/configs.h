@@ -3,7 +3,7 @@
 
 class Config {
 private:
-    int port;
+    unsigned int port;
     int max_connections;
     int timeout;
     int memory_limit;
@@ -18,7 +18,7 @@ public:
     void load();
     std::string toString();
 
-    int     get_port();
+    unsigned int     get_port();
     int     get_max_connections();
     int     get_timeout();
     int     get_memory_limit();
