@@ -7,7 +7,7 @@ LIBRARIES = -L. -lhttpserver
 
 DIR = src
 TARGET = server
-OBJFILES = main.o configs.o hello_world.o monitoring.o
+OBJFILES = main.o configs.o resources.o monitoring.o logger.o
 
 
 all: $(TARGET)
@@ -19,7 +19,7 @@ $(TARGET): $(OBJFILES)
 	$(CC) $(CXXFLAGS) -c $^
 
 clean:
-	rm -f *.exe *.o
+	rm -f *.exe *.o *.txt
 
 
 

@@ -1,3 +1,6 @@
+#ifndef CONFIGS_HEADER
+#define CONFIGS_HEADER
+
 #include <string>
 
 
@@ -16,7 +19,7 @@ private:
 public:
     Config();
     void load();
-    std::string toString();
+    void log_configs();
 
     unsigned int     get_port();
     int     get_max_connections();
@@ -28,3 +31,5 @@ public:
     std::string get_mem_key_path();
     std::string get_mem_cert_path();
 };
+
+#endif

@@ -1,5 +1,6 @@
-#include "../include/configs.h"
-#include <string>
+#include "../include/configs.hpp"
+#include "spdlog/spdlog.h"
+
 
 Config::Config() {
     load();
@@ -11,7 +12,7 @@ void Config::load() {
     // Load from the environment variables
     port = getenv("PORT") 
         ? static_cast<int>(std::stoul(getenv("PORT"))) 
-        : 8080;
+        : 8081;
 
     max_connections = getenv("MAX_CONNECTIONS") 
         ? static_cast<int>(std::stoi(getenv("MAX_CONNECTIONS"))) 
@@ -52,11 +53,11 @@ void Config::load() {
 
 
 // Print config settings
-std::string Config::toString() {
-    return "Port Number: " + std::to_string(port) + "\n"
-        + "Timeout: " + std::to_string(timeout) + "\n"
-        + "Maximum Connections: " + std::to_string(max_connections) + "\n"
-        + "Max Threads: " + std::to_string(max_threads) + "\n";
+void Config::log_configs() {
+    spdlog::info("Port Number: " + std::to_string(port));
+    spdlog::info("Timeout: " + std::to_string(timeout));
+    spdlog::info("Maximum Connections: " + std::to_string(max_connections));
+    spdlog::info("Max Threads: " + std::to_string(max_threads));
 }
 
 
