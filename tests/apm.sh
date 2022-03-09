@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOG_FILE="amp.log"
+LOG_FILE="apm.log"
 LOG_FILE_PATH="../logs"
 LOG_VALGRIND='apm_valgrind.log'
 
