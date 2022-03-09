@@ -12,6 +12,8 @@
 class hello_world_resource : public httpserver::http_resource {
 public:
     const std::shared_ptr<httpserver::http_response> render_GET(const httpserver::http_request& req) {
+        auto start = std::chrono::steady_clock::now();
+
         // load digest info
         std::string user = getenv("DIGEST_USER") 
             ? static_cast<std::string>(getenv("DIGEST_USER")) 
@@ -40,6 +42,9 @@ public:
 
 
         spdlog::info("Hello resource - SUCCESS");
+        auto end = std::chrono::steady_clock::now();
+        std::string latency = std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count());
+        spdlog::info("Hello resource - Latency: " + latency + " µs");
         return std::shared_ptr<httpserver::string_response>(
             new httpserver::string_response("SUCCESS: Hello, World!\n", 200, "text/plain")
         );
@@ -49,6 +54,8 @@ public:
 class slow_resource : public httpserver::http_resource {
 public:
     const std::shared_ptr<httpserver::http_response> render_GET(const httpserver::http_request& req) {
+        auto start = std::chrono::steady_clock::now();
+
         // load digest info
         std::string user = getenv("DIGEST_USER") 
             ? static_cast<std::string>(getenv("DIGEST_USER")) 
@@ -82,6 +89,10 @@ public:
 
 
         spdlog::info("Slow resource - SUCCESS");
+
+        auto end = std::chrono::steady_clock::now();
+        std::string latency = std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count());
+        spdlog::info("Slow resource - Latency: " + latency + " µs");
         return std::shared_ptr<httpserver::string_response>(
             new httpserver::string_response("SUCCESS: Hello, World!\n", 200, "text/plain")
         );
