@@ -7,7 +7,7 @@ LIBRARIES = -L. -lhttpserver
 
 DIR = src
 TARGET = server
-OBJFILES = main.o configs.o hello_world.o monitoring.o logger.o
+OBJFILES = main.o configs.o resources.o monitoring.o logger.o
 
 
 all: $(TARGET)

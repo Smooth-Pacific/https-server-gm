@@ -3,7 +3,7 @@
 
 #include "../include/configs.hpp"
 //#include "../include/monitoring.h"
-#include "hello_world.cpp"
+#include "resources.cpp"
 #include "../include/logger.hpp"
 
 //void start_monitoring(Monitoring &m) {
@@ -47,11 +47,13 @@ int main() {
 
 
     // Declare resources
-    hello_world_resource hwr;
+    hello_world_resource    hwr;
+    slow_resource           sr;
 
 
     // Register resources
     ws.register_resource("/hello", &hwr);
+    ws.register_resource("/slow", &sr);
 
     
     ws.start(true);
