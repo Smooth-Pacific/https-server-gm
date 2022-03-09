@@ -11,7 +11,7 @@ void Logger::setup_logger(std::string file_path) {
     console_sink->set_pattern("[%^--%L--%$] [thread %t] %v");
 
     // File sink settings
-    auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(file_path);
+    auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(file_path, true);
     file_sink->set_level(spdlog::level::trace);
     file_sink->set_pattern("[%H:%M:%S %z] [%^--%L--%$] [thread %t] %v");
 
@@ -19,5 +19,6 @@ void Logger::setup_logger(std::string file_path) {
     auto  logger =  std::make_shared<spdlog::logger>("multi_sink", spdlog::sinks_init_list({console_sink, file_sink}));
     logger->set_level(spdlog::level::trace);
 
-    spdlog::set_default_logger(std::move(logger));
+    spdlog::set_default_logger(logger);
+    spdlog::flush_on(spdlog::level::trace);
 }

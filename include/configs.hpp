@@ -2,7 +2,6 @@
 #define CONFIGS_HEADER
 
 #include <string>
-#include "spdlog/spdlog.h"
 
 
 class Config {

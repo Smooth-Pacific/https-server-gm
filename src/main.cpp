@@ -18,12 +18,12 @@ int main() {
 
     // Set logger settings
     try {
-        Logger::setup_logger("logs/file_sink.log");
+        Logger::setup_logger("logs/server.log");
     }
 
     catch(const spdlog::spdlog_ex &ex) {
-        std::cerr << "Log init failed: " << ex.what() << std::endl;
-        exit(1);
+       std::cerr << "Log init failed: " << ex.what() << std::endl;
+       exit(1);
     }
 
 
@@ -55,8 +55,8 @@ int main() {
 
     
     ws.start(true);
-    spdlog::info("log working 2");
 
+    spdlog::shutdown();
     //monitor_thread.join();
     return 0;
 }

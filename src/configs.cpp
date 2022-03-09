@@ -1,4 +1,6 @@
 #include "../include/configs.hpp"
+#include "spdlog/spdlog.h"
+
 
 Config::Config() {
     load();
