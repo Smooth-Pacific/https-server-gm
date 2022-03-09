@@ -1,15 +1,31 @@
 #include <iostream>
 #include <httpserver.hpp>
-#include "../include/configs.h"
+
+#include "../include/configs.hpp"
 //#include "../include/monitoring.h"
 #include "hello_world.cpp"
+#include "../include/logger.hpp"
 
-void start_monitoring(Monitoring &m) {
-    m.start();
-}
+//void start_monitoring(Monitoring &m) {
+//    m.start();
+//}
+
+void setup_logger(std::string f);
 
 int main() {
+    // Load configs for server
     Config c;
+
+    // Set logger settings
+    try {
+        Logger::setup_logger("logs/file_sink.log");
+    }
+
+    catch(const spdlog::spdlog_ex &ex) {
+        std::cerr << "Log init failed: " << ex.what() << std::endl;
+        exit(1);
+    }
+
 
     httpserver::webserver ws = httpserver::create_webserver(c.get_port())
         .use_ssl()
@@ -23,24 +39,24 @@ int main() {
         .max_threads(c.get_max_threads())
         .digest_auth();
 
+    spdlog::info("Server started with settings:");
+    c.log_configs();
+
+    //Monitoring m("log.txt");
+    //std::thread monitor_thread(start_monitoring, std::ref(m));
+
+
+    // Declare resources
     hello_world_resource hwr;
+
+
+    // Register resources
     ws.register_resource("/hello", &hwr);
 
-    std::cout << "\nSERVER START" << std::endl;
-    std::cout << c.toString() << std::endl;
-    std::cout << "Ongoing Status: " << std::endl;
-
-    Monitoring m("log.txt");
-
-    std::thread monitor_thread(start_monitoring, std::ref(m));
+    
     ws.start(true);
+    spdlog::info("log working 2");
 
+    //monitor_thread.join();
     return 0;
 }
-
-
-// Call with this command within the container
-// curl -XGET -v http://localhost:8001/hello
-// curl -XGET -v -k https://localhost:8001/hello
-// curl -XGET -v --digest --user myuser:password https://localhost:8080/hello
-// curl -v --cacert /usr/local/share/ca-certificates/root-ca.crt --digest --user myuser:password https://localhost:8080/hello

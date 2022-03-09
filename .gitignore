@@ -30,6 +30,7 @@
 *.exe
 *.out
 *.app
+*.log
 
 ### My ignores ###
 # Exclude Folders

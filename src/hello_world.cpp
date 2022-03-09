@@ -1,7 +1,8 @@
 #include <iostream>
 #include <thread>
 #include <httpserver.hpp>
-#include "../include/monitoring.h"
+#include "spdlog/spdlog.h"
+//#include "../include/monitoring.h"
 
 
 #define MY_OPAQUE "11733b200778ce33060f31c9af70a870ba96ddd4"
@@ -13,11 +14,11 @@ public:
         // load digest info
         std::string user = getenv("DIGEST_USER") 
             ? static_cast<std::string>(getenv("DIGEST_USER")) 
-            : std::string("");
+            : std::string("myuser");
 
         std::string pass = getenv("DIGEST_PASS") 
             ? static_cast<std::string>(getenv("DIGEST_PASS")) 
-            : std::string("");
+            : std::string("password");
 
         if(req.get_digested_user() == "") {
             return std::shared_ptr<httpserver::digest_auth_fail_response>(
@@ -29,14 +30,15 @@ public:
             bool reload_nonce = false;
 
             if(!req.check_digest_auth(user, pass, 300, &reload_nonce)) {
-                Monitoring::add_log("LOG: FAIL - Digest Authentication Fail");
+                spdlog::warn("Hello resource - FAIL to authenticate");
                 return std::shared_ptr<httpserver::digest_auth_fail_response>(
                     new httpserver::digest_auth_fail_response("FAIL: Fail to authenticate\n", user, MY_OPAQUE, reload_nonce)
                 );
             }
         }
 
-        Monitoring::add_log("LOG: SUCCESS - Hello World Call");
+
+        spdlog::info("Hello resource - SUCCESS");
         return std::shared_ptr<httpserver::string_response>(
             new httpserver::string_response("SUCCESS: Hello, World!\n", 200, "text/plain")
         );
