@@ -51,15 +51,6 @@ free >> $LOG_FILE_PATH/$LOG_FILE
 
 
 echo -e "\n\n\n" >> $LOG_FILE_PATH/$LOG_FILE
-echo "  - Valgrind Stats"
-echo "------------ Valgrind Statistics -------------" >> $LOG_FILE_PATH/$LOG_FILE
-echo "------------------- valgrind ---------------------" >> $LOG_FILE_PATH/$LOG_FILE
-sudo valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=$LOG_FILE_PATH/$LOG_VALGRIND ../server.exe &>/dev/null 2>&1 
-grep "LEAK SUMMARY:" $LOG_FILE_PATH/$LOG_VALGRIND -A 6 >> $LOG_FILE_PATH/$LOG_FILE
-sudo rm -rf logs
-
-
-echo -e "\n\n\n" >> $LOG_FILE_PATH/$LOG_FILE
 echo "  - Memory Info"
 echo "------------------- Memory Info ---------------------" >> $LOG_FILE_PATH/$LOG_FILE
 echo "------------- sudo cat /proc/meminfo ----------------" >> $LOG_FILE_PATH/$LOG_FILE
@@ -71,3 +62,11 @@ echo "  - CPU Info"
 echo "--------------------- CPU Info ----------------------" >> $LOG_FILE_PATH/$LOG_FILE
 echo "------------- sudo cat /proc/cpuinfo ----------------" >> $LOG_FILE_PATH/$LOG_FILE
 sudo cat /proc/cpuinfo >> $LOG_FILE_PATH/$LOG_FILE
+
+echo -e "\n\n\n" >> $LOG_FILE_PATH/$LOG_FILE
+echo "  - Valgrind Stats"
+echo "------------ Valgrind Statistics -------------" >> $LOG_FILE_PATH/$LOG_FILE
+echo "------------------- valgrind ---------------------" >> $LOG_FILE_PATH/$LOG_FILE
+sudo valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --log-file=$LOG_FILE_PATH/$LOG_VALGRIND ../server.exe &>/dev/null 2>&1
+grep "LEAK SUMMARY:" $LOG_FILE_PATH/$LOG_VALGRIND -A 6 >> $LOG_FILE_PATH/$LOG_FILE
+sudo rm -rf logs
